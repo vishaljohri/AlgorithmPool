@@ -1,4 +1,3 @@
-package sorting.searching;
 
 public class MatrixSearch {
 	
