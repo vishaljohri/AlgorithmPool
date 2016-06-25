@@ -1,4 +1,3 @@
-package programming.interviews.exposed.book;
 
 import java.util.HashMap;
 
