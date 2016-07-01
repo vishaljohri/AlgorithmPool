@@ -1,26 +1,31 @@
 
 public class MatrixSearch {
 	
-	boolean searchMatrix(int a[][], int key) {
-		int row = 0;
-		int col = a[0].length - 1;
-		
-		while(row <= a.length-1 && col >= 0) {
-			if(a[row][col] == key)
+	public boolean searchMatrix(int[][] matrix, int target) {
+		if(matrix.length == 0)
+			return false;
+		int rows = matrix.length;
+		int cols = matrix[0].length;
+		int start = 0;
+		int end = rows * cols - 1;
+		while(start <= end) {
+			int mid = (start + end) / 2;
+			int i = mid / cols;
+			int j = mid % cols;
+			if(matrix[i][j] == target)
 				return true;
-			if(a[row][col] > key)
-				col--;			
+			else if(matrix[i][j] < target)
+				start = mid + 1;
 			else
-				row++;
+				end = mid - 1;
 		}
 		return false;
 	}
 
 	public static void main(String[] args) {
-		int a[][] = {{15, 20, 40, 85}, {20, 35, 80, 95}, {30, 55, 95, 105}, {40, 80, 100, 120}};
-		MatrixSearch ms = new MatrixSearch();
-		System.out.println(ms.searchMatrix(a, 55));
-
+		int a[][] = {{0, 3, 5, 7}, {10, 11, 16, 20}, {23, 31, 34, 50}};
+		MatrixSearch m = new MatrixSearch();
+		System.out.println(m.searchMatrix(a, 7));
 	}
 
 }
