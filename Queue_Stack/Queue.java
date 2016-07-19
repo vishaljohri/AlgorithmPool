@@ -31,13 +31,20 @@ public class Queue {
 	}
 	
 	int dequeue() {
-		if(front == -1) {
-			System.out.println("queue underflow");
-			return 0;
+		if(count == 0 || front == -1) {
+			System.out.println("can't dequeue, queue is empty");
+			return -1;
 		}
+		int element = queue[front];
 		count--;
-		return(queue[(front++)%maxSize]);
-		
+		if(front == rear) {
+			front = -1;
+			rear = -1;
+		}
+		else {
+			front = (front + 1) % maxSize;
+		}
+		return element;	
 	}
 	
 	void reverseQueueFirstKElements(int k) {
