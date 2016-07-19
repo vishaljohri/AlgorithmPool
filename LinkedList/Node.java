@@ -131,20 +131,26 @@ public class Node {
 	
 	Node pairWiseReverse() {
 		Node cur = this;
-		Node nextCur = cur.next;
-		Node head = nextCur;
-		Node nextNextCur = nextCur.next;
+		Node curNext = cur.next;
+		Node head = curNext;
+		Node curNextNext = curNext.next;
 		
-		while(nextNextCur != null) {
-			cur.next = nextNextCur.next;
-			nextCur.next = cur;
-			cur = nextNextCur;
-			nextCur = nextNextCur.next;
-			nextNextCur = nextCur.next;	
+		while(curNextNext != null && curNextNext.next != null) {
+			cur.next = curNextNext.next;
+			curNext.next = cur;
+			cur = curNextNext;
+			curNext = cur.next;
+			curNextNext = curNext.next;
 		}
-		nextCur.next = cur;
-		cur.next = null;
-		
+		if(curNextNext == null) {
+			curNext.next = cur;
+			cur.next = null;
+		}
+		else {
+			curNext.next = cur;
+			cur.next = curNextNext;
+			curNextNext.next = null;
+		}
 		return head;
 	}
 	
@@ -180,19 +186,6 @@ public class Node {
 		}
 		
 		System.out.println("kth last element is: " + prev.data);		
-	}
-	
-	void pallindrome() {
-		Node cur = this;
-		Node reverse = cur.reverse();
-		while(cur != null) {
-			if(cur.data != reverse.data) {
-				System.out.println("not pallindrome");
-				return;
-			}
-			cur = cur.next;
-		}
-		System.out.println("pallindrome");
 	}
 	
 	void pallindromeOptimized() {
@@ -249,7 +242,7 @@ public class Node {
 		Node fast = this;
 		Node slow = this;
 		boolean flag = false;
-		while(fast.next != null) {
+		while(fast != null && fast.next != null) {
 			fast = fast.next.next;
 			slow = slow.next;
 			if(fast == slow) {
@@ -313,6 +306,40 @@ public class Node {
         startSecond.next = startFirst.next;
         startFirst.next = startSecond;
     }
+	
+	Node addLists(Node list1, Node list2) {
+		Node cur1 = list1;
+		Node cur2 = list2;
+		Node add = null;
+		Node headAdd = null;
+		int sum = 0;
+		int carry = 0;
+		while(cur1 != null || cur2 != null) {
+			sum = carry;
+			if(cur1 != null) {
+				sum += cur1.data;
+				cur1 = cur1.next;
+			}
+			if(cur2 != null) {
+				sum += cur2.data;
+				cur2 = cur2.next;
+			}
+			carry = sum / 10;
+			sum = sum % 10;
+			if(add == null) {
+				headAdd = new Node(sum);
+				add = headAdd;
+			}
+			else {
+				add.next = new Node(sum);
+				add = add.next;
+			}
+		}
+		if(carry != 0) 
+			add.next = new Node(carry);
+		
+		return headAdd;
+	}
 
 	public static void main(String[] args) {
 		Node newNode = new Node(5);
