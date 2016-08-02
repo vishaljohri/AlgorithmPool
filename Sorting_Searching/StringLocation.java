@@ -19,18 +19,15 @@ public class StringLocation {
 			while (true) {
 				if (left < start && right > end)
 					return -1;
-				if (left >= start && str[left].equals("")) {
-					left--;
-				} else {
+				else if (left >= start && !str[left].equals("")) {
 					mid = left;
 					break;
-				}
-				if (right <= end && str[right].equals("")) {
-					right++;
-				} else {
+				} else if (right <= end && !str[right].equals("")) {
 					mid = right;
 					break;
 				}
+				left--;
+				right++;
 			}
 		}
 		
